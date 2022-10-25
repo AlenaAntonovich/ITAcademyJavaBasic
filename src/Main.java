@@ -1,78 +1,71 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 public class Main {
     public static void main(String[] args) {
-        List<Integer> schoolGrades = new ArrayList<>();
-        Random randomNumber = new Random();
-        for (int i = 0; i < 10; i++) {
-            schoolGrades.add(randomNumber.nextInt(11));
+
+        try {
+            method1();
+        } catch (NullPointerException e) {
+            System.out.println("NPE: " + e);
+        } finally {
+            System.out.println("Final");
         }
-        System.out.println(schoolGrades);
-        schoolGrades.removeIf(mark ->{
-            return mark < 4;
-        });
-        System.out.println(schoolGrades);
+    }
+
+    public static void method1() {
+        Object obj = null;
+        obj.hashCode();
     }
 }
 
-
-import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        Integer[] m = {1, 2, 2, 3, 4, 5, 5 ,6,6,7,7,7,7,7};
-        Set<Integer> sp1 = new HashSet<Integer>();
-        for (int i = 0; i < m.length; i++) {
-            sp1.add(m[i]);
+class Main {
+    public static void main(String args[]) {
+        int num1, num2;
+        try {
+            num1 = 0;
+            num2 = 62 / num1;
+            System.out.println(num2);
+            System.out.println("Hey I'm at the end of try block");
         }
-        System.out.println(sp1);
+        catch(ArithmeticException e) {
+            System.out.println("You should not divide a number by zero");
+        }
+        catch(Exception e) {
+            System.out.println("Exception occurred");
+        }finally {
+            System.out.println("Final.");
+        }
     }
 }
 
+package ua.com.prologistic;
 
-import java.util.ArrayList;
-        import java.util.Iterator;
-        import java.util.List;
-        import java.util.Random;
+        import java.io.FileNotFoundException;
+        import java.io.IOException;
 
-public class Main {
-    public static void main(String[] args) {
-        List<Integer> schoolGrades = new ArrayList<>();
-        Random randomNumber = new Random();
-        for (int i = 0; i<10; i++) {
-            schoolGrades.add(randomNumber.nextInt(11));
+public class ExceptionHandling {
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        try {
+            testException(-5);
+            testException(-10);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Необязательный блок, но раз уже написан, то выполнятся будет не зависимо от того было исключение или нет");
         }
-        System.out.println( schoolGrades);
-        schoolGrades.removeIf(mark -> { return mark < 4; });
-
-        System.out.println(schoolGrades);
-        int maxGrade = schoolGrades.get(0);
-        Iterator<Integer> iterator = schoolGrades.iterator();
-        while (iterator.hasNext()) {
-            int maxSearch = iterator.next();
-            if (maxSearch > maxGrade) {
-                maxGrade = maxSearch;
-            }
-        }
-        System.out.println("Max school grade: " + maxGrade);
+        testException(15);
     }
-}
-import java.util.Scanner;
-        import java.util.Map;
-        import java.util.TreeMap;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String text = scanner.nextLine();
-        Map<String, Integer> wordToCount = new TreeMap<>();
-        for (String word : text.split(" ")) {
-            wordToCount.put(word, wordToCount.getOrDefault(word, 0) + 1);
+    public static void testException(int i) throws FileNotFoundException, IOException {
+        if (i < 0) {
+            FileNotFoundException myException = new FileNotFoundException("число меньше 0: " + i);
+            throw myException;
+        } else if (i > 10) {
+            throw new IOException("Число должно быть в пределах от 0 до 10");
         }
-        System.out.println(wordToCount);
+
     }
+
 }
-
-
-
 
